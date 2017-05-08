@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
+<style>
+#form-control{
+    width: 50%;
+    
+    margin: auto;
+    background-color: #737CA1;
+} 
+#tablo-control{
+    background-color: #FFFFFF;
+   
+    height: 50%;
+    
+
+}
+</style>
+
+
+
+
+</head>
+<body>
+   <!-- <button onclick="yazData()" >Bas</button>
+     <p id="degis">degistir</p>
+    -->
+
+
+
+
+
+
+
+
+   <div id="form-control">
+   <div id="tablo-control">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">Yemek Kabının Bilgileri</div>
+     
+    
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Ağırlık</th>
+        <th>Tarih ve Saat</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td id="weight">250</td>
+        <td id="date"></td>
+        
+      </tr>
+      
+    </tbody>
+  </table>
+
+  </div>
+
+  <button type="button"    style="margin-bottom: 5%" onclick="alData()"  class="btn btn-primary center-block">Güncelle</button>
+   
+    <div class="panel panel-primary" style="padding-top: : 50%">
+      <div class="panel-heading">  Yemek Miktarı</div>
+            <div class="form-group">
+                <label for="sel1">Yem Miktarı(Gr):</label>
+                <select class="form-control" id="sel1" name='sel1'>
+                    <option value=50>50 Gr </option>
+                    <option value=100>100 Gr</option>
+                    <option value=150>150 Gr</option>
+                    <option value=200>200 Gr</option>
+                    <option value=250>250 Gr</option>
+                </select>
+                <span id="activeYem">Tekrar Yem Koymak İçin Kalan Süre :</span><span id="sayac"> 60</span>
+            </div>
+        </div>
+        <button type="button" id="yemKoy" onclick="yazData()" class="btn btn-success center-block">Yem Koy</button>
+    </div>
+
+</div>
+    
+
+
+  
+</div>
+  
+ 
+</div>
+</div>
+
+
+
+
+     <script type="text/javascript">
+  // set your channel IDs here
+    var channel_id1 = 265493;
+
+    // set your channel read api keys here
+    var api_key1 = 'UX8YJO3HT42ENBEA';
+    var tarih;
+     var p;
+    function alData() {
+    //Get Data Set 1   $.getJSON('https://api.thingspeak.com/channels/' + channel_id1 + '/feed/last.json?api_key=' + api_key1,
+   
+    //Get Data Set 1   $.getJSON('https://api.thingspeak.com/channels/' + channel_id1 + '/feed/last.json?api_key=' + api_key1,
+   $.getJSON('https://api.thingspeak.com/channels/265493/fields/1/last.json', function(data1) {
+        //Get Data Set 2
+        p=data1.field1;
+       document.getElementById("weight").innerHTML=p;
+    });
+    }
+   
+   
+    
+    
+  
+
+</script>
+
+<script type="text/javascript">
+
+$("#yemKoy").on("click",function(){
+    $(this).attr("disabled","disabled");
+    var sayac = setInterval(function() {
+        $("#sayac").html(parseInt($("#sayac").html())-1);
+        if(parseInt($("#sayac").html()) == 0){
+            $("#yemKoy").removeAttr("disabled");
+             $("#sayac").html(60);
+            clearInterval(sayac);
+        }
+    }, 1000);
+
+
+})
+//onclick="yazData()"
+
+  // set your channel IDs here
+    var channel_id1 = 265493;
+
+    // set your channel read api keys here
+    var api_key1 = 'UX8YJO3HT42ENBEA';
+    /*V762AB4ASZUMQIUB*/
+ function yazData() {
+    
+
+
+ var selectWeight=$( "#sel1" ).val();
+
+
+ $.getJSON('https://api.thingspeak.com/update?api_key=V762AB4ASZUMQIUB&field3='+ selectWeight+'&field2='+ 1);
+ alert("İşlem Başarıyla Gerçekleşti.\n" +selectWeight+ "Gr Yem Koyuldu.");
+ document.getElementById("activeYem").style.visibility="visible" ;
+        document.getElementById("sayac").style.visibility="visible" ;
+}
+</script>
+
+
+      <script type="text/javascript">
+
+
+        function codeAddress() {
+            var channel_id1 = 265493;
+
+    // set your channel read api keys here
+    var api_key1 = 'UX8YJO3HT42ENBEA';
+    var tarih;
+     var p;
+    
+    //Get Data Set 1   $.getJSON('https://api.thingspeak.com/channels/' + channel_id1 + '/feed/last.json?api_key=' + api_key1,
+   
+    //Get Data Set 1   $.getJSON('https://api.thingspeak.com/channels/' + channel_id1 + '/feed/last.json?api_key=' + api_key1,
+  // $.getJSON('https://api.thingspeak.com/channels/265493/fields/1/last.json', function(data1) {
+        //Get Data Set 2
+     $.getJSON('https://api.thingspeak.com/channels/265493/fields/1/last.json', function(data1) {
+     
+        p=data1.field1;
+       tarih = new Date();
+       document.getElementById("weight").innerHTML=p;
+       document.getElementById("date").innerHTML=tarih;
+    });
+        document.getElementById("activeYem").style.visibility="hidden" ;
+        document.getElementById("sayac").style.visibility="hidden" ;
+    }
+        
+        window.onload = codeAddress;
+        </script>
+
+
+
+</body>
+</html>
